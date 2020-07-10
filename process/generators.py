@@ -1,3 +1,4 @@
+import os
 import string
 from random import randint
 from  data import *
@@ -7,10 +8,17 @@ def randomString(stringLength=8):
     letters = string.ascii_lowercase
     return ''.join(rd.choice(letters) for i in range(stringLength))
 
+def checkFolders(dataSize):
+    if os.path.isdir(f'scripts') == False: os.mkdir(f'scripts')
+    if os.path.isdir(f'textFiles') == False: os.mkdir(f'textFiles')
+    if os.path.isdir(f'scripts/{dataSize}') == False: os.mkdir(f'scripts/{dataSize}')
+    if os.path.isdir(f'textFiles/{dataSize}') == False: os.mkdir(f'textFiles/{dataSize}')
+
 def generateUsers(dataSize):
     fN = firstName()
     lN = lastName()
     ad = address()
+    checkFolders(dataSize)
     file1 = open(f"textFiles/{dataSize}/users{dataSize}.txt","a")
     file2 = open(f"scripts/{dataSize}/insert_users{dataSize}.sql","a")
     for i in range(dataSize):
@@ -32,6 +40,7 @@ def generateEditorials(dataSize):
     nounList = noun()
     adjectiveList = adjective()
     countryList = country()
+    checkFolders(dataSize)
     file1 = open(f"textFiles/{dataSize}/editorials{dataSize}.txt","a")
     file2 = open(f"scripts/{dataSize}/insert_editorials{dataSize}.sql","a")
     for i in range(dataSize):
@@ -49,6 +58,7 @@ def generateAuthors(dataSize):
     fN = firstName()
     lN = lastName()
     countryList = country()
+    checkFolders(dataSize)
     file1 = open(f"textFiles/{dataSize}/authors{dataSize}.txt","a")
     file2 = open(f"scripts/{dataSize}/insert_authors{dataSize}.sql","a")
     for i in range(dataSize):
@@ -69,6 +79,7 @@ def generateBooks(dataSize):
     adjectiveList = adjective()
     verbList = verb()
     adverbList = adverb()
+    checkFolders(dataSize)
     file1 = open(f"textFiles/{dataSize}/books{dataSize}.txt","a")
     file2 = open(f"scripts/{dataSize}/insert_books{dataSize}.sql","a")
     for i in range(dataSize):
@@ -97,6 +108,7 @@ def generateBooks(dataSize):
             file2.write(str2)
 
 def generateStock(dataSize):
+    checkFolders(dataSize)
     bookFile = open(f"textFiles/{dataSize}/books{dataSize}.txt","r")
     bookMatrix = []
     file1 = open(f"textFiles/{dataSize}/stock{dataSize}.txt","a")
@@ -114,6 +126,7 @@ def generateStock(dataSize):
         file2.write(str2)
 
 def generateTransaction(dataSize):
+    checkFolders(dataSize)
     stockFile = open(f"textFiles/{dataSize}/stock{dataSize}.txt","r")
     stockMatrix = []
     file1 = open(f"textFiles/{dataSize}/transaction{dataSize}.txt","a")
