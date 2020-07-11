@@ -110,7 +110,7 @@ def generateBooks(schema, dataSize):
 
 def generateStock(schema, dataSize):
     checkFolders(schema, dataSize)
-    bookFile = open(f"textFiles/{dataSize}/books{dataSize}.txt","r")
+    bookFile = open(f"{schema}/textFiles/{dataSize}/books{dataSize}.txt","r")
     bookMatrix = []
     file1 = open(f"{schema}/textFiles/{dataSize}/stock{dataSize}.txt","a")
     file2 = open(f"{schema}/scripts/{dataSize}/insert_stock{dataSize}.sql","a")
@@ -128,7 +128,7 @@ def generateStock(schema, dataSize):
 
 def generateTransaction(schema, dataSize):
     checkFolders(schema, dataSize)
-    stockFile = open(f"textFiles/{dataSize}/stock{dataSize}.txt","r")
+    stockFile = open(f"{schema}/textFiles/{dataSize}/stock{dataSize}.txt","r")
     stockMatrix = []
     file1 = open(f"{schema}/textFiles/{dataSize}/transaction{dataSize}.txt","a")
     file2 = open(f"{schema}/scripts/{dataSize}/insert_transaction{dataSize}.sql","a")
