@@ -8,19 +8,20 @@ def randomString(stringLength=8):
     letters = string.ascii_lowercase
     return ''.join(rd.choice(letters) for i in range(stringLength))
 
-def checkFolders(dataSize):
-    if os.path.isdir(f'scripts') == False: os.mkdir(f'scripts')
-    if os.path.isdir(f'textFiles') == False: os.mkdir(f'textFiles')
-    if os.path.isdir(f'scripts/{dataSize}') == False: os.mkdir(f'scripts/{dataSize}')
-    if os.path.isdir(f'textFiles/{dataSize}') == False: os.mkdir(f'textFiles/{dataSize}')
+def checkFolders(schema, dataSize):
+    if os.path.isdir(f'{schema}') == False: os.mkdir(f'{schema}')
+    if os.path.isdir(f'{schema}/scripts') == False: os.mkdir(f'{schema}/scripts')
+    if os.path.isdir(f'{schema}/textFiles') == False: os.mkdir(f'{schema}/textFiles')
+    if os.path.isdir(f'{schema}/scripts/{dataSize}') == False: os.mkdir(f'{schema}/scripts/{dataSize}')
+    if os.path.isdir(f'{schema}/textFiles/{dataSize}') == False: os.mkdir(f'{schema}/textFiles/{dataSize}')
 
-def generateUsers(dataSize):
+def generateUsers(schema, dataSize):
     fN = firstName()
     lN = lastName()
     ad = address()
-    checkFolders(dataSize)
-    file1 = open(f"textFiles/{dataSize}/users{dataSize}.txt","a")
-    file2 = open(f"scripts/{dataSize}/insert_users{dataSize}.sql","a")
+    checkFolders(schema, dataSize)
+    file1 = open(f"{schema}/textFiles/{dataSize}/users{dataSize}.txt","a")
+    file2 = open(f"{schema}/scripts/{dataSize}/insert_users{dataSize}.sql","a")
     for i in range(dataSize):
         a = rd.randint(0,999)
         b = rd.randint(0,999)
@@ -30,43 +31,43 @@ def generateUsers(dataSize):
         password = randomString(8)
         puntos = rd.randint(0, 10000)
         str1 = f"'{fN[a]}', '{lN[b]}', '{email}','{phone}', '{password}', '{ad[c]}', {puntos}\n"
-        str2 = f"INSERT INTO koob.users{dataSize} (first_name, last_name, email, phone, passwd, address, puntos_koob) VALUES ('{fN[a]}', '{lN[b]}', '{email}','{phone}', '{password}', '{ad[c]}', {puntos});\n"
+        str2 = f"INSERT INTO {schema}.users{dataSize} (first_name, last_name, email, phone, passwd, address, puntos_koob) VALUES ('{fN[a]}', '{lN[b]}', '{email}','{phone}', '{password}', '{ad[c]}', {puntos});\n"
         file1.write(str1)
         file2.write(str2)
     file1.close()
     file2.close()
 
-def generateEditorials(dataSize):
+def generateEditorials(schema, dataSize):
     nounList = noun()
     adjectiveList = adjective()
     countryList = country()
-    checkFolders(dataSize)
-    file1 = open(f"textFiles/{dataSize}/editorials{dataSize}.txt","a")
-    file2 = open(f"scripts/{dataSize}/insert_editorials{dataSize}.sql","a")
+    checkFolders(schema, dataSize)
+    file1 = open(f"{schema}/textFiles/{dataSize}/editorials{dataSize}.txt","a")
+    file2 = open(f"{schema}/scripts/{dataSize}/insert_editorials{dataSize}.sql","a")
     for i in range(dataSize):
         a = rd.randint(0,999)
         b = rd.randint(0,999)
         c = rd.randint(0,len(countryList)-1)
         str1 = f"'{nounList[a]}', '{adjectiveList[b]}', '{countryList[c]}'\n"
-        str2 = f"INSERT INTO koob.editorials{dataSize} (ed_name, country) VALUES ('{adjectiveList[a]} {nounList[b]}', '{countryList[c]}');\n"
+        str2 = f"INSERT INTO {schema}.editorials{dataSize} (ed_name, country) VALUES ('{adjectiveList[a]} {nounList[b]}', '{countryList[c]}');\n"
         file1.write(str1)
         file2.write(str2)
     file1.close()
     file2.close()
 
-def generateAuthors(dataSize):
+def generateAuthors(schema, dataSize):
     fN = firstName()
     lN = lastName()
     countryList = country()
-    checkFolders(dataSize)
-    file1 = open(f"textFiles/{dataSize}/authors{dataSize}.txt","a")
-    file2 = open(f"scripts/{dataSize}/insert_authors{dataSize}.sql","a")
+    checkFolders(schema, dataSize)
+    file1 = open(f"{schema}/textFiles/{dataSize}/authors{dataSize}.txt","a")
+    file2 = open(f"{schema}/scripts/{dataSize}/insert_authors{dataSize}.sql","a")
     for i in range(dataSize):
         a = rd.randint(0,999)
         b = rd.randint(0,999)
         c = rd.randint(0,len(countryList)-1)
         str1 = f"'{fN[a]}', '{lN[b]}', {countryList[c]}\n"
-        str2 = f"INSERT INTO koob.authors{dataSize} (first_name, last_name, country) VALUES ('{fN[a]}', '{lN[b]}', '{countryList[c]}');\n"
+        str2 = f"INSERT INTO {schema}.authors{dataSize} (first_name, last_name, country) VALUES ('{fN[a]}', '{lN[b]}', '{countryList[c]}');\n"
         file1.write(str1)
         file2.write(str2)
     file1.close()
@@ -74,14 +75,14 @@ def generateAuthors(dataSize):
 
 genreList = ['Comedy', 'Drama', 'Fantasy', 'Thriller', 'Romance', 'Sci-Fi', 'Non-fiction']
 
-def generateBooks(dataSize):
+def generateBooks(schema, dataSize):
     nounList = noun()
     adjectiveList = adjective()
     verbList = verb()
     adverbList = adverb()
-    checkFolders(dataSize)
-    file1 = open(f"textFiles/{dataSize}/books{dataSize}.txt","a")
-    file2 = open(f"scripts/{dataSize}/insert_books{dataSize}.sql","a")
+    checkFolders(schema, dataSize)
+    file1 = open(f"{schema}/textFiles/{dataSize}/books{dataSize}.txt","a")
+    file2 = open(f"{schema}/scripts/{dataSize}/insert_books{dataSize}.sql","a")
     for i in range(dataSize):
         a = rd.randint(0,998)
         b = rd.randint(0,999)
@@ -93,26 +94,26 @@ def generateBooks(dataSize):
         namePattern = rd.randint(1,3)
         if namePattern == 1:
             str1 = f"'{nounList[a]} of the {adjectiveList[c]} {nounList[b]}', {auth_id}, {ed_id}, '{genreList[g]}'\n"
-            str2 = f"INSERT INTO koob.books{dataSize} (book_name, auth_id, ed_id, genre) VALUES ('{nounList[a]} of the {adjectiveList[c]} {nounList[b]}', {auth_id}, {ed_id}, '{genreList[g]}');\n"
+            str2 = f"INSERT INTO {schema}.books{dataSize} (book_name, auth_id, ed_id, genre) VALUES ('{nounList[a]} of the {adjectiveList[c]} {nounList[b]}', {auth_id}, {ed_id}, '{genreList[g]}');\n"
             file1.write(str1)
             file2.write(str2)
         if namePattern == 2:
             str1 = f"'The {adjectiveList[a]} {nounList[b]} of {nounList[c]}', {auth_id}, {ed_id}, '{genreList[g]}'\n"
-            str2 = f"INSERT INTO koob.books{dataSize} (book_name, auth_id, ed_id, genre) VALUES ('The {adjectiveList[a]} {nounList[b]} of {nounList[c]}', {auth_id}, {ed_id}, '{genreList[g]}');\n"
+            str2 = f"INSERT INTO {schema}.books{dataSize} (book_name, auth_id, ed_id, genre) VALUES ('The {adjectiveList[a]} {nounList[b]} of {nounList[c]}', {auth_id}, {ed_id}, '{genreList[g]}');\n"
             file1.write(str1)
             file2.write(str2)
         if namePattern == 3:
             str1 = f"'{verbList[a]} {adverbList[adv]}', {auth_id}, {ed_id}, '{genreList[g]}'\n"
-            str2 = f"INSERT INTO koob.books{dataSize} (book_name, auth_id, ed_id, genre) VALUES ('{verbList[a]} {adverbList[adv]}', {auth_id}, {ed_id}, '{genreList[g]}');\n"
+            str2 = f"INSERT INTO {schema}.books{dataSize} (book_name, auth_id, ed_id, genre) VALUES ('{verbList[a]} {adverbList[adv]}', {auth_id}, {ed_id}, '{genreList[g]}');\n"
             file1.write(str1)
             file2.write(str2)
 
-def generateStock(dataSize):
-    checkFolders(dataSize)
+def generateStock(schema, dataSize):
+    checkFolders(schema, dataSize)
     bookFile = open(f"textFiles/{dataSize}/books{dataSize}.txt","r")
     bookMatrix = []
-    file1 = open(f"textFiles/{dataSize}/stock{dataSize}.txt","a")
-    file2 = open(f"scripts/{dataSize}/insert_stock{dataSize}.sql","a")
+    file1 = open(f"{schema}/textFiles/{dataSize}/stock{dataSize}.txt","a")
+    file2 = open(f"{schema}/scripts/{dataSize}/insert_stock{dataSize}.sql","a")
     for line in bookFile:
         tempList = line.split(', ')
         bookMatrix.append(tempList)
@@ -121,16 +122,16 @@ def generateStock(dataSize):
         condition = rd.randint(1,10)
         price = rd.randint(1, 299)
         str1 = f"{bookMatrix[bookIndex][1]}, {bookMatrix[bookIndex][2]}, {bookMatrix[bookIndex][0]}, {condition}, {price}\n"
-        str2 = f"INSERT INTO koob.stock{dataSize} (auth_id, ed_id, book_name, b_condition, price) VALUES ({bookMatrix[bookIndex][1]}, {bookMatrix[bookIndex][2]}, {bookMatrix[bookIndex][0]}, {condition}, {price});\n"
+        str2 = f"INSERT INTO {schema}.stock{dataSize} (auth_id, ed_id, book_name, b_condition, price) VALUES ({bookMatrix[bookIndex][1]}, {bookMatrix[bookIndex][2]}, {bookMatrix[bookIndex][0]}, {condition}, {price});\n"
         file1.write(str1)
         file2.write(str2)
 
-def generateTransaction(dataSize):
-    checkFolders(dataSize)
+def generateTransaction(schema, dataSize):
+    checkFolders(schema, dataSize)
     stockFile = open(f"textFiles/{dataSize}/stock{dataSize}.txt","r")
     stockMatrix = []
-    file1 = open(f"textFiles/{dataSize}/transaction{dataSize}.txt","a")
-    file2 = open(f"scripts/{dataSize}/insert_transaction{dataSize}.sql","a")
+    file1 = open(f"{schema}/textFiles/{dataSize}/transaction{dataSize}.txt","a")
+    file2 = open(f"{schema}/scripts/{dataSize}/insert_transaction{dataSize}.sql","a")
     for line in stockFile:
         tempList = line.split(', ')
         stockMatrix.append(tempList)
@@ -140,6 +141,6 @@ def generateTransaction(dataSize):
         else: transaction = 'selling'
         userID = rd.randint(1, dataSize)
         str1 = f"{i+1}, {stockMatrix[i][0]}, {stockMatrix[i][1]}, {stockMatrix[i][2]}, {userID}, '{transaction}'\n"
-        str2 = f"INSERT INTO koob.transaction{dataSize} (stock_id, auth_id, ed_id, book_name, user_id, t_type) VALUES ({i+1}, {stockMatrix[i][0]}, {stockMatrix[i][1]}, {stockMatrix[i][2]}, {userID}, '{transaction}');\n"
+        str2 = f"INSERT INTO {schema}.transaction{dataSize} (stock_id, auth_id, ed_id, book_name, user_id, t_type) VALUES ({i+1}, {stockMatrix[i][0]}, {stockMatrix[i][1]}, {stockMatrix[i][2]}, {userID}, '{transaction}');\n"
         file1.write(str1)
         file2.write(str2)
