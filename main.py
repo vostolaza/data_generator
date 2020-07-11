@@ -1,8 +1,8 @@
 from process.generators import *
 
-# sizes = [1000, 10000, 100000, 1000000]
-sizes = [1000000]
-schema = 'koobi'
+sizes = [1000, 10000, 100000, 1000000]
+schema = 'koob'
+
 for dataSize in sizes:
     generateUsers(schema, dataSize)
     generateEditorials(schema, dataSize)
@@ -10,3 +10,4 @@ for dataSize in sizes:
     generateBooks(schema, dataSize)
     generateStock(schema, dataSize)
     generateTransaction(schema, dataSize)
+    generatePublishes(schema, dataSize)

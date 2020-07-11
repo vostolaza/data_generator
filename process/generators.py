@@ -144,3 +144,20 @@ def generateTransaction(schema, dataSize):
         str2 = f"INSERT INTO {schema}.transaction{dataSize} (stock_id, auth_id, ed_id, book_name, user_id, t_type) VALUES ({i+1}, {stockMatrix[i][0]}, {stockMatrix[i][1]}, {stockMatrix[i][2]}, {userID}, '{transaction}');\n"
         file1.write(str1)
         file2.write(str2)
+
+def generatePublishes(schema, dataSize):
+    checkFolders(schema, dataSize)
+    bookFile = open(f"{schema}/textFiles/{dataSize}/books{dataSize}.txt","r")
+    bookMatrix = []
+    file1 = open(f"{schema}/textFiles/{dataSize}/publishes{dataSize}.txt","a")
+    file2 = open(f"{schema}/scripts/{dataSize}/insert_publishes{dataSize}.sql","a")
+    for line in bookFile:
+        tempList = line.split(', ')
+        bookMatrix.append(tempList)
+    for i in range(dataSize):
+        bookIndex = i
+        ISBN =9876570000000+i
+        str1 = f"'{ISBN}', {bookMatrix[bookIndex][1]}, {bookMatrix[bookIndex][2]}, {bookMatrix[bookIndex][0]}\n"
+        str2 = f"INSERT INTO {schema}.publishes{dataSize} (isbn, auth_id, ed_id, book_name) VALUES ('{ISBN}', {bookMatrix[bookIndex][1]}, {bookMatrix[bookIndex][2]}, {bookMatrix[bookIndex][0]});\n"
+        file1.write(str1)
+        file2.write(str2)
